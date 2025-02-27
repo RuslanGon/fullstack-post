@@ -45,7 +45,7 @@ app.post("/auth/register", registerValidation, async (req, res) => {
         expiresIn: '30d'
     })
 
-    res.json({...user, token});
+    res.json({...user._doc, token});
   } catch (error) {
     console.log(error);
     res.status(500).json({message: 'не удалось зарегестрироваться'});
