@@ -15,11 +15,11 @@ app.use(express.json())
 app.post('/auth/register', registerValidation, (req, res) => {
    const errors = validationResult(req)
    if(!errors.isEmpty()){
-    return status(400).json(errors.array())
+    return res.status(400).json(errors.array())
    }
-   res.status({
-    succses: true
-   })
+   res.status(200).json({
+    success: true
+  });
 })
 
 app.listen(4444, () => {
