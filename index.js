@@ -6,7 +6,7 @@ import { registerValidation } from './validation/auth.js';
 import User from './models/User.js';
 import bcrypt from 'bcrypt'
 
-mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('DB is ok');
 }).catch(() => {console.log("DB is error");})
 
@@ -30,9 +30,8 @@ app.post('/auth/register', registerValidation, async (req, res) => {
     passwordHash,
    })
 
-   res.status(200).json({
-    success: true
-  });
+   const user = await doc.save()
+   res.json(user)
 })
 
 app.listen(4444, () => {
