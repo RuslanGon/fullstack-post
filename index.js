@@ -1,5 +1,10 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+
+mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(() => {
+    console.log('DB is ok');
+}).catch(() => {console.log("DB is error");})
 
 const app = express()
 app.use(express.json())
