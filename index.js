@@ -20,7 +20,7 @@ app.post("/auth/login", async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: "Полльзователь не найден!" });
+      return res.status(404).json({ message: "Пользователь не найден!" });
     }
 
     const isValidPass = await bcrypt.compare(
@@ -28,7 +28,7 @@ app.post("/auth/login", async (req, res) => {
       user._doc.passwordHash
     );
     if (!isValidPass) {
-      return res.status(404).json({ message: "Неверный логин или пароль!" });
+      return res.status(400).json({ message: "Неверный логин или пароль!" });
     }
 
     const token = jwt.sign(
