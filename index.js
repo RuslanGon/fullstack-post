@@ -13,6 +13,19 @@ mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?re
 const app = express()
 app.use(express.json())
 
+app.post('/auth/login', async (req, res) => {
+try {
+  const user = await User.findOne({
+    email:req.body.email
+  })
+  if(!user) {
+    return req.status(404).json({message: 'Полльзователь не найден!'})
+  }
+} catch (error) {
+  console.log(error);
+}
+} )
+
 
 app.post("/auth/register", registerValidation, async (req, res) => {
   try {
