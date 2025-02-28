@@ -13,22 +13,41 @@ mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?re
 const app = express()
 app.use(express.json())
 
-app.post('/auth/login', async (req, res) => {
-try {
-  const user = await User.findOne({
-    email:req.body.email
-  })
-  if(!user) {
-    return req.status(404).json({message: 'Полльзователь не найден!'})
+app.post("/auth/login", async (req, res) => {
+  try {
+    const user = await User.findOne({
+      email: req.body.email,
+    });
+
+    if (!user) {
+      return req.status(404).json({ message: "Полльзователь не найден!" });
+    }
+
+    const isValidPass = await bcrypt.compare(
+      req.body.password,
+      user._doc.passwordHash
+    );
+    if (!isValidPass) {
+      return req.status(404).json({ message: "Неверный логин или пароль!" });
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+      },
+      "secret123",
+      {
+        expiresIn: "30d",
+      }
+    );
+
+    const { passwordHash, ...userdata } = user._doc;
+    res.json({ ...userdata, token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message: 'Не удалось фвторизоваться!'});
   }
-  const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash)
-  if(!isValidPass) {
-     return req.status(404).json({message: 'Неверный логин или пароль!'})
-  }
-} catch (error) {
-  console.log(error);
-}
-} )
+});
 
 
 app.post("/auth/register", registerValidation, async (req, res) => {
