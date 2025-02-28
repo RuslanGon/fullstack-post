@@ -21,6 +21,10 @@ try {
   if(!user) {
     return req.status(404).json({message: 'Полльзователь не найден!'})
   }
+  const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash)
+  if(!isValidPass) {
+     return req.status(404).json({message: 'Неверный логин или пароль!'})
+  }
 } catch (error) {
   console.log(error);
 }
