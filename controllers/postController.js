@@ -1,6 +1,5 @@
 import Post from '../models/Post.js'
 
-
 export const createPost = async (req, res) => {
 try {
     const doc = new Post({
@@ -14,5 +13,6 @@ try {
     res.json(post)
 } catch (error) {
     console.log(error);
+    res.status(500).json({message: 'не удалось создать статью'});
 }
 }
