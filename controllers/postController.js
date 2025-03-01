@@ -46,8 +46,13 @@ export const getOne = async (req, res) => {
       (err, doc) => {
         if(err) {
           console.log(err);
-          res.status(500).json({
+          return res.status(500).json({
             message: 'Не удалось получить одну статью',
+          });
+        }
+        if(!doc) {
+          return res.status(404).json({
+            message: 'Статья не найдена',
           });
         }
       }
