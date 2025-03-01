@@ -23,8 +23,35 @@ export const createPost = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const posts = await Post.find()
+    const posts = await Post.find().populate('user').exec()
     res.json(posts)
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Не удалось получить статьи',
+    });
+  }
+}  
+
+export const getOne = async (req, res) => {
+  try {
+    const postId = req.params.id
+    Post.findOneAndUpdate({
+      _id: postId
+    }, {
+      $inc: { viewsCount: 1 }
+    }, {
+      returnDocument: 'after'
+    }, 
+      (err, doc) => {
+        if(err) {
+          console.log(err);
+          res.status(500).json({
+            message: 'Не удалось получить одну статью',
+          });
+        }
+      }
+    )
   } catch (error) {
     console.log(err);
     res.status(500).json({
