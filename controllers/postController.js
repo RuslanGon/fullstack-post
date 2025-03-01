@@ -79,3 +79,22 @@ export const deletePost = async (req, res) => {
     });
   }
 };
+
+export const updatePost = async(req, res) => {
+  try {
+    const postId = req.params.id;
+    await Post.updateOne({ _id: postId }, {
+      title: req.body.title,
+      text: req.body.text,
+      imageUrl: req.body.imageUrl,
+      tags: Array.isArray(req.body.tags) ? req.body.tags : req.body.tags?.split(',') || [],
+      user: req.userId,
+    })
+    res.json({ success: true });
+  } catch (error) {
+      console.log(error);
+    res.status(500).json({
+      message: "Не удалось обновить статью",
+    });
+  }
+}
