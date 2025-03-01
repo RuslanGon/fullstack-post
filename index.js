@@ -4,13 +4,21 @@ import { loginValidation, registerValidation } from './validation/auth.js';
 import checkAuth from './utils/checkAuth.js'
 import { getMe, login, register } from './controllers/userController.js';
 import {createPost, deletePost, getAll, getOne, updatePost} from './controllers/postController.js'
-import { postCreateValidation } from './validation/post.js';
+import multer from 'multer';
+// import { postCreateValidation } from './validation/post.js';
 
 mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('DB is ok');
 }).catch(() => {console.log("DB is error");})
 
 const app = express()
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, 'uploads')
+  }
+})
+
 app.use(express.json())
 
 // Авторизация
