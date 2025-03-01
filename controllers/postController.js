@@ -33,39 +33,6 @@ export const getAll = async (req, res) => {
   }
 }  
 
-// export const getOne = async (req, res) => {
-//   try {
-//     const postId = req.params.id
-//     Post.findOneAndUpdate({
-//       _id: postId
-//     }, {
-//       $inc: { viewsCount: 1 }
-//     }, {
-//       returnDocument: 'after'
-//     }, 
-//       (err, doc) => {
-//         if(err) {
-//           console.log(err);
-//           return res.status(500).json({
-//             message: 'Не удалось получить одну статью',
-//           });
-//         }
-//         if(!doc) {
-//           return res.status(404).json({
-//             message: 'Статья не найдена',
-//           });
-//         }
-//         res.status(doc)
-//       }
-//     )
-//   } catch (error) {
-//     console.log(err);
-//     res.status(500).json({
-//       message: 'Не удалось получить статью',
-//     });
-//   }
-// }  
-  
 export const getOne = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -87,6 +54,27 @@ export const getOne = async (req, res) => {
     console.log(error);
     res.status(500).json({
       message: 'Не удалось получить статью',
+    });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    const doc = await Post.findOneAndDelete({ _id: postId });
+
+    if (!doc) {
+      return res.status(404).json({
+        message: "Статья не найдена",
+      });
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Не удалось удалить статью",
     });
   }
 };
