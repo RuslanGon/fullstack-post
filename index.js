@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { loginValidation, registerValidation } from './validation/auth.js';
 import checkAuth from './utils/checkAuth.js'
 import { getMe, login, register } from './controllers/userController.js';
-import {createPost} from './controllers/postController.js'
+import {createPost, getAll} from './controllers/postController.js'
 import { postCreateValidation } from './validation/post.js';
 
 mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?retryWrites=true&w=majority&appName=Cluster0').then(() => {
@@ -24,6 +24,9 @@ app.get('/auth/me', checkAuth, getMe)
 
 // Создание статьи
 app.post('/posts', checkAuth, createPost)
+
+// Получение всех статьй
+app.get('/posts',checkAuth, getAll)
 
 // Одна статья по id
 app.get('/posts/:id', createPost)
