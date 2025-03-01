@@ -24,6 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 app.use(express.json())
+app.use('/uploads', express.static('uploads'))
 
 // Для загрузки постов с помощью multer
 app.post("/upload", checkAuth, upload.single('image'), (req, res) => {
