@@ -26,7 +26,7 @@ const upload = multer({storage})
 app.use(express.json())
 
 // Для загрузки постов с помощью multer
-app.post("/uploads", upload.single('image'), (req, res) => {
+app.post("/upload", checkAuth, upload.single('image'), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
