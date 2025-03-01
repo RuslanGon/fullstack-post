@@ -20,4 +20,16 @@ export const createPost = async (req, res) => {
       });
     }
   };
+
+export const getAll = async (req, res) => {
+  try {
+    const posts = await Post.find()
+    res.json(posts)
+  } catch (error) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Не удалось получить статьи',
+    });
+  }
+}  
   
