@@ -29,10 +29,10 @@ app.post('/posts', checkAuth, createPost)
 app.get('/posts',checkAuth, getAll)
 
 // Одна статья по id
-app.get('/posts/:id', getOne )
+app.get('/posts/:id', getOne)
 
 // Удаление статьи
-app.delete('/posts/:id', deletePost )
+app.delete('/posts/:id', deletePost)
 
 app.listen(4444, () => {
   try {
