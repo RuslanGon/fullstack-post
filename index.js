@@ -27,7 +27,9 @@ app.use(express.json())
 app.use('/uploads', express.static('uploads'))
 
 // Для загрузки постов с помощью multer
-app.post("/upload", checkAuth, upload.single('image'), (req, res) => {
+app.post("/upload", 
+// checkAuth,
+ upload.single('image'), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
@@ -40,22 +42,34 @@ app.post("/auth/login",loginValidation, login );
 app.post("/auth/register", registerValidation, register);
 
 // Иформация о себе (о токене)
-app.get('/auth/me', checkAuth, getMe)
+app.get('/auth/me', 
+// checkAuth, 
+getMe)
 
 // Создание статьи
-app.post('/posts', checkAuth, createPost)
+app.post('/posts',
+//  checkAuth,
+  createPost)
 
 // Получение всех статьй
-app.get('/posts',checkAuth, getAll)
+app.get('/posts', 
+// checkAuth,
+ getAll)
 
 // Одна статья по id
-app.get('/posts/:id', checkAuth, getOne)
+app.get('/posts/:id', 
+// checkAuth,
+ getOne)
 
 // Удаление статьи
-app.delete('/posts/:id', checkAuth, deletePost)
+app.delete('/posts/:id', 
+// checkAuth, 
+deletePost)
 
 // Обновление статьи
-app.patch('/posts/:id', checkAuth, updatePost)
+app.patch('/posts/:id',
+//  checkAuth,
+  updatePost)
 
 app.listen(4444, () => {
   try {
