@@ -6,6 +6,7 @@ import { getMe, login, register } from './controllers/userController.js';
 import {createPost, deletePost, getAll, getOne, updatePost} from './controllers/postController.js'
 import multer from 'multer';
 // import { postCreateValidation } from './validation/post.js';
+import cors from 'cors'
 
 mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('DB is ok');
@@ -24,6 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 app.use(express.json())
+app.use(cors())
 app.use('/uploads', express.static('uploads'))
 
 // Для загрузки постов с помощью multer
