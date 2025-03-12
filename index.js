@@ -55,6 +55,7 @@ app.post('/posts',
 
   // Создание тега
 app.get('/posts/tags', getLastTads)
+app.get('/tags', getLastTads)
 
 // Получение всех статьй
 app.get('/posts', 
