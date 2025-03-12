@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import { loginValidation, registerValidation } from './validation/auth.js';
 import checkAuth from './utils/checkAuth.js'
 import { getMe, login, register } from './controllers/userController.js';
-import {createPost, deletePost, getAll, getOne, updatePost} from './controllers/postController.js'
+import {createPost, deletePost, getAll, getLastTads, getOne, updatePost} from './controllers/postController.js'
 import multer from 'multer';
 // import { postCreateValidation } from './validation/post.js';
 import cors from 'cors'
@@ -52,6 +52,9 @@ getMe)
 app.post('/posts',
 //  checkAuth,
   createPost)
+
+  // Создание тега
+app.get('/posts/tags', getLastTads)
 
 // Получение всех статьй
 app.get('/posts', 
