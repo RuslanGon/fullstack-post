@@ -45,7 +45,7 @@ app.post("/auth/register", registerValidation, register);
 
 // Иформация о себе (о токене)
 app.get('/auth/me', 
-// checkAuth, 
+checkAuth, 
 getMe)
 
 // Создание статьи
