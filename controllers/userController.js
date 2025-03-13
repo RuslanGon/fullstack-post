@@ -79,17 +79,18 @@ export const login = async (req, res) => {
       res.status(500).json({message: 'Не удалось авторизоваться!'});
     }
   }
-export const getMe = async (req, res) => {
+  export const getMe = async (req, res) => {
     try {
-      const user = await User.findById(req.userId)
-      if(!user) {
-        res.status(404).json({message: 'Пользователь не найден'});
-      }
-      const {passwordHash, ...userdata} = user._doc
-      res.json(userdata);
-  
+        const user = await User.findById(req.userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'Пользователь не найден' }); // Добавлен return
+        }
+
+        const { passwordHash, ...userdata } = user._doc;
+        res.json(userdata);
     } catch (error) {
-      console.log(error);
-      res.status(500).json({message: 'Нет доступа'});
+        console.log(error);
+        res.status(500).json({ message: 'Нет доступа' });
     }
-  } 
+};
