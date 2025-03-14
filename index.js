@@ -50,7 +50,7 @@ getMe)
 
 // Создание статьи
 app.post('/posts',
-//  checkAuth,
+ checkAuth,
   createPost)
 
   // Создание тега
