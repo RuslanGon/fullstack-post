@@ -7,6 +7,7 @@ import {createPost, deletePost, getAll, getLastTads, getOne, updatePost} from '.
 import multer from 'multer';
 // import { postCreateValidation } from './validation/post.js';
 import cors from 'cors'
+import fs from 'fs'
 
 mongoose.connect('mongodb+srv://post:post@cluster0.lc6ql.mongodb.net/postbase?retryWrites=true&w=majority&appName=Cluster0').then(() => {
     console.log('DB is ok');
@@ -16,12 +17,15 @@ const app = express()
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
-    cb(null, 'uploads')
+    if (!fs.existsSync("uploads")) {
+      fs.mkdirSync("uploads");
+    }
+    cb(null, "uploads");
   },
   filename: (_, file, cb) => {
-    cb(null, file.originalname)
-  }
-})
+    cb(null, file.originalname);
+  },
+});
 const upload = multer({storage})
 
 app.use(express.json())
